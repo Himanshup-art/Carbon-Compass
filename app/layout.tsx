@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Carbon Compass EVS Project",
-  description: "Personal carbon footprint calculator for EVS with Firestore-backed tracking and goals."
+  title: "Carbon Compass",
+  description: "Track your carbon footprint, set reduction goals, and build sustainable habits with personalized insights and monthly progress tracking."
 };
 
 export default function RootLayout({
@@ -12,7 +12,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

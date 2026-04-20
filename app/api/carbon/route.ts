@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { calculateCarbonFootprint, getMonthKey, validateCarbonForm } from "@/lib/carbon";
-import { getAdminDb } from "@/lib/firebase-admin";
+import { isFirebaseConfigured, getAdminDb } from "@/lib/firebase-admin";
 import { CarbonEntryRecord, CarbonFormValues } from "@/lib/types";
 
 const COLLECTION = "carbonEntries";
 
 export async function GET(request: NextRequest) {
   try {
+    if (!isFirebaseConfigured()) {
+      return NextResponse.json({ mode: "local" });
+    }
+
     const profileId = request.nextUrl.searchParams.get("profileId");
 
     if (!profileId) {
@@ -17,32 +21,39 @@ export async function GET(request: NextRequest) {
     const snapshot = await db
       .collection(COLLECTION)
       .where("profileId", "==", profileId)
-      .orderBy("createdAt", "desc")
-      .limit(12)
       .get();
 
-    const history = snapshot.docs.map(
-      (doc) =>
-        ({
-          id: doc.id,
-          ...doc.data()
-        }) as CarbonEntryRecord
-    );
+    const history = snapshot.docs
+      .map(
+        (doc) =>
+          ({
+            id: doc.id,
+            ...doc.data()
+          }) as CarbonEntryRecord
+      )
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 15);
 
-    const trend = [...history]
+    const groupedTrend = new Map<string, number>();
+    for (const item of history) {
+      if (!groupedTrend.has(item.monthKey)) {
+        groupedTrend.set(item.monthKey, item.calculation.totalAnnualKg);
+      }
+    }
+
+    const trend = Array.from(groupedTrend.entries())
       .reverse()
-      .map((item) => ({ monthKey: item.monthKey, totalAnnualKg: item.calculation.totalAnnualKg }));
+      .map(([monthKey, totalAnnualKg]) => ({ monthKey, totalAnnualKg }));
 
     return NextResponse.json({
+      mode: "cloud",
       latestEntry: history[0] ?? null,
       history,
       trend
     });
   } catch (error) {
     return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : "Unable to load dashboard data"
-      },
+      { error: error instanceof Error ? error.message : "Unable to load data" },
       { status: 500 }
     );
   }
@@ -50,6 +61,10 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isFirebaseConfigured()) {
+      return NextResponse.json({ mode: "local" });
+    }
+
     const payload = (await request.json()) as CarbonFormValues;
     const issues = validateCarbonForm(payload);
 
@@ -70,6 +85,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({
+      mode: "cloud",
       entry: {
         id: docRef.id,
         ...payload,
@@ -80,9 +96,30 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : "Unable to save entry"
-      },
+      { error: error instanceof Error ? error.message : "Unable to save entry" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    if (!isFirebaseConfigured()) {
+      return NextResponse.json({ mode: "local" });
+    }
+
+    const id = request.nextUrl.searchParams.get("id");
+    if (!id) {
+      return NextResponse.json({ error: "id is required" }, { status: 400 });
+    }
+
+    const db = getAdminDb();
+    await db.collection(COLLECTION).doc(id).delete();
+
+    return NextResponse.json({ mode: "cloud", success: true });
+  } catch (error) {
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Unable to delete entry" },
       { status: 500 }
     );
   }

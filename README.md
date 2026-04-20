@@ -1,18 +1,17 @@
-# EVS Carbon Footprint Project
+# Carbon Compass
 
-This is a full-stack EVS carbon footprint calculator built with Next.js App Router and Firestore.
+A personal sustainability tracker that helps you understand your carbon footprint, set reduction goals, and build better environmental habits over time.
 
-## What it includes
+## Features
 
-- travel, electricity, and food based carbon calculation
-- India and global comparison
-- green / amber / red rating
-- personalized reduction suggestions
-- Firestore-backed report history
-- monthly trend tracking
-- print-friendly result view for PDF export
+- **Guided Calculator** — Step-by-step lifestyle assessment covering travel, energy, and food
+- **Live Impact Score** — Real-time carbon footprint calculation with a green/amber/red rating
+- **Monthly Tracking** — Save check-ins and track your progress over time
+- **Actionable Insights** — Personalized reduction suggestions ranked by impact
+- **Goal Coach** — Set and monitor reduction targets with monthly gap analysis
+- **Export** — Print-friendly report view for PDF export
 
-## Setup
+## Getting Started
 
 1. Install dependencies
 
@@ -20,28 +19,29 @@ This is a full-stack EVS carbon footprint calculator built with Next.js App Rout
 npm install
 ```
 
-2. Create your local env file
-
-```bash
-copy .env.example .env.local
-```
-
-3. Fill in the Firebase Admin SDK values from your Firebase service account.
-
-4. Start development
+2. Start development server
 
 ```bash
 npm run dev
 ```
 
-## Firestore collection
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-The app saves entries into:
+## How It Works
 
-- `carbonEntries`
+1. **Sign in** with your name and email
+2. **Fill in** your travel, energy, and food habits
+3. **View** your annual carbon footprint and breakdown
+4. **Save** a monthly check-in to track progress
+5. **Act** on personalized reduction suggestions
 
-## Required env vars
+## Tech Stack
 
-- `FIREBASE_PROJECT_ID`
-- `FIREBASE_CLIENT_EMAIL`
-- `FIREBASE_PRIVATE_KEY`
+- Next.js 15 (App Router)
+- React 19
+- TypeScript
+- localStorage for data persistence
+
+## Data Privacy
+
+All data is stored locally in your browser. Nothing is sent to any server.

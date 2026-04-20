@@ -31,7 +31,7 @@ export type Suggestion = {
 export type CalculationResult = {
   totalAnnualKg: number;
   totalAnnualTonnes: number;
-  indiaAverageKg: number;
+  nationalAverageKg: number;
   globalAverageKg: number;
   rating: Rating;
   ratingLabel: string;

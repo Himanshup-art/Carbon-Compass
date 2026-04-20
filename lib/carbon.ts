@@ -7,7 +7,7 @@ import {
   TravelMode
 } from "@/lib/types";
 
-const INDIA_AVERAGE_KG = 1900;
+const NATIONAL_AVERAGE_KG = 1900;
 const GLOBAL_AVERAGE_KG = 4000;
 
 const TRAVEL_FACTORS: Record<TravelMode, number> = {
@@ -147,14 +147,14 @@ export function calculateCarbonFootprint(values: CarbonFormValues): CalculationR
   const totalAnnualKg = breakdown.reduce((sum, item) => sum + item.annualKg, 0);
   const totalAnnualTonnes = totalAnnualKg / 1000;
   const rating =
-    totalAnnualKg < INDIA_AVERAGE_KG ? "green" : totalAnnualKg <= GLOBAL_AVERAGE_KG ? "amber" : "red";
+    totalAnnualKg < NATIONAL_AVERAGE_KG ? "green" : totalAnnualKg <= GLOBAL_AVERAGE_KG ? "amber" : "red";
   const ratingLabel =
     rating === "green" ? "Below average" : rating === "amber" ? "Needs improvement" : "High impact";
   const headline =
     rating === "green"
-      ? "Your lifestyle is currently below the Indian average."
+      ? "Your lifestyle footprint is below the national average — great work!"
       : rating === "amber"
-        ? "You are around or above the Indian average. A few changes can lower it fast."
+        ? "You are around the average. A few targeted changes can lower it quickly."
         : "Your annual carbon impact is high and deserves focused action.";
   const targetAnnualKg = Math.max(0, totalAnnualKg * (1 - values.targetReductionPercent / 100));
   const monthlyProjectionKg = totalAnnualKg / 12;
@@ -162,7 +162,7 @@ export function calculateCarbonFootprint(values: CarbonFormValues): CalculationR
   return {
     totalAnnualKg: round(totalAnnualKg),
     totalAnnualTonnes: round(totalAnnualTonnes, 2),
-    indiaAverageKg: INDIA_AVERAGE_KG,
+    nationalAverageKg: NATIONAL_AVERAGE_KG,
     globalAverageKg: GLOBAL_AVERAGE_KG,
     rating,
     ratingLabel,
