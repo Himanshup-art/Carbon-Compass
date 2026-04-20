@@ -12,6 +12,10 @@ export type UserSession = {
   createdAt: string;
 };
 
+function generateId() {
+  return Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+}
+
 function generateDeterministicId(email: string) {
   // Creating a deterministic ID from the email so data persists across logins perfectly
   let hash = 0;
