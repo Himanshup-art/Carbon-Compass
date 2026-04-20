@@ -126,7 +126,7 @@ export function Dashboard() {
         deleteLocalEntry(id);
       }
       await loadData(values.profileId);
-    } catch (e) {
+    } catch {
       alert("Failed to delete entry");
     } finally {
       setLoading(false);
@@ -162,7 +162,7 @@ export function Dashboard() {
         btn.innerText = "Saved!";
         setTimeout(() => (btn.innerText = orig), 2000);
       }
-    } catch (e) {
+    } catch {
       alert("Error saving profile");
       if (btn) btn.innerText = orig;
     }
@@ -191,7 +191,7 @@ export function Dashboard() {
       if (!res.ok) throw new Error("Failed to update password");
       alert("Password updated successfully!");
       form.reset();
-    } catch (e) {
+    } catch {
       alert("Error updating password");
     } finally {
       btn.innerText = orig;
@@ -205,7 +205,6 @@ export function Dashboard() {
   const maxTrendValue = Math.max(...trend.map((t) => t.totalAnnualKg), 1);
   const monthlyGap = getMonthlyGap(preview.totalAnnualKg, preview.targetAnnualKg);
   const progressDelta = dashboard.history[1] ? dashboard.history[0].calculation.totalAnnualKg - dashboard.history[1].calculation.totalAnnualKg : 0;
-  const firstName = userName.split(" ")[0] || "there";
   const ecoLevel = getEcoLevel(preview.totalAnnualKg);
   const equivalencies = getEquivalencies(preview.totalAnnualKg);
   const progressPercent = Math.min(100, Math.round((1 - preview.totalAnnualKg / preview.globalAverageKg) * 100));
@@ -434,7 +433,7 @@ export function Dashboard() {
                 <div style={{ position: "absolute", right: "-10px", bottom: "-10px", fontSize: "5rem", opacity: 0.1 }}>🍃</div>
                 <span style={{ display: "block", fontSize: "0.7rem", fontWeight: "800", letterSpacing: "0.15em", textTransform: "uppercase", opacity: 0.8, marginBottom: "8px" }}>💡 Daily Eco-Tip</span>
                 <strong style={{ display: "block", fontSize: "1.1rem", marginBottom: "8px" }}>Switch to LED lighting</strong>
-                <p style={{ margin: 0, fontSize: "0.85rem", opacity: 0.9, lineHeight: 1.5 }}>Simply replacing 5 incandescent bulbs with LEDs in your home can save up to 400kg of CO₂ per year. That's equivalent to planting 15 trees!</p>
+                <p style={{ margin: 0, fontSize: "0.85rem", opacity: 0.9, lineHeight: 1.5 }}>Simply replacing 5 incandescent bulbs with LEDs in your home can save up to 400kg of CO₂ per year. That&apos;s equivalent to planting 15 trees!</p>
               </section>
             </div>
 
@@ -708,19 +707,19 @@ export function Dashboard() {
                 {values.targetReductionPercent >= 40 ? (
                   <>
                     <strong style={{ fontSize: "1.8rem" }}>🌳 5 Trees Planted</strong>
-                    <p style={{ fontSize: "0.8rem" }}>Incredible! We've planted 5 trees on your behalf.</p>
+                    <p style={{ fontSize: "0.8rem" }}>Incredible! We&apos;ve planted 5 trees on your behalf.</p>
                     <button className="btn btn-primary" type="button" style={{ marginTop: 12, width: '100%', padding: "10px 16px" }} onClick={() => alert("🎉 SUPER REWARD: You unlocked a 30% discount voucher! Code: GREEN30")}>Claim 30% Voucher</button>
                   </>
                 ) : values.targetReductionPercent >= 20 ? (
                   <>
                     <strong style={{ fontSize: "1.8rem" }}>🌲 2 Trees Planted</strong>
-                    <p style={{ fontSize: "0.8rem" }}>Great goal! We've planted 2 trees for you.</p>
+                    <p style={{ fontSize: "0.8rem" }}>Great goal! We&apos;ve planted 2 trees for you.</p>
                     <button className="btn btn-primary" type="button" style={{ marginTop: 12, width: '100%', padding: "10px 16px" }} onClick={() => alert("🎉 Congratulations: You unlocked a 15% discount voucher! Code: GREEN15")}>Claim 15% Voucher</button>
                   </>
                 ) : values.targetReductionPercent >= 10 ? (
                   <>
                     <strong style={{ fontSize: "1.8rem" }}>🌱 1 Tree Planted</strong>
-                    <p style={{ fontSize: "0.8rem" }}>Good start! You've earned 1 newly planted tree.</p>
+                    <p style={{ fontSize: "0.8rem" }}>Good start! You&apos;ve earned 1 newly planted tree.</p>
                     <button className="btn btn-primary" type="button" style={{ marginTop: 12, width: '100%', padding: "10px 16px" }} onClick={() => alert("✅ You unlocked a 5% discount voucher! Code: GREEN5")}>Claim 5% Voucher</button>
                   </>
                 ) : (

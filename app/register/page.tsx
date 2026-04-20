@@ -45,7 +45,7 @@ export default function RegisterPage() {
 
       setUser(data.name, data.email);
       router.push("/dashboard");
-    } catch (e: any) {
+    } catch (e: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
       setErrorMsg(e.message);
       setShake(true);
       setTimeout(() => setShake(false), 600);

@@ -27,7 +27,7 @@ export default function PrivacyPage() {
         <h2 style={{ fontSize: "1.4rem", fontWeight: 700, margin: "32px 0 16px" }}>2. How We Use Your Data</h2>
         <p style={{ color: "var(--text-secondary)", marginBottom: 16 }}>
           The data you provide is used strictly for generating your personal sustainability reports and calculating your footprint history. 
-          When operating in local mode, your data never leaves your device's local storage. When operating in cloud mode, data is stored securely in our designated databases.
+          When operating in local mode, your data never leaves your device&apos;s local storage. When operating in cloud mode, data is stored securely in our designated databases.
         </p>
 
         <h2 style={{ fontSize: "1.4rem", fontWeight: 700, margin: "32px 0 16px" }}>3. Data Sharing</h2>
@@ -37,7 +37,7 @@ export default function PrivacyPage() {
         
         <h2 style={{ fontSize: "1.4rem", fontWeight: 700, margin: "32px 0 16px" }}>4. Your Rights</h2>
         <p style={{ color: "var(--text-secondary)", marginBottom: 16 }}>
-          You retain the right to delete your data at any time using the "Delete" functionality embedded within your Dashboard History.
+          You retain the right to delete your data at any time using the &quot;Delete&quot; functionality embedded within your Dashboard History.
         </p>
 
         <div style={{ marginTop: 60, padding: 24, background: "var(--bg-warm)", borderRadius: 16, border: "1px solid rgba(16, 185, 129, 0.1)" }}>

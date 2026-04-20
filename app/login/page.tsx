@@ -41,7 +41,7 @@ export default function LoginPage() {
 
       setUser(data.name, data.email);
       router.push("/dashboard");
-    } catch (e: any) {
+    } catch (e: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
       setErrorMsg(e.message);
       setShake(true);
       setTimeout(() => setShake(false), 600);
@@ -81,7 +81,7 @@ export default function LoginPage() {
         </form>
 
         <p className="login-footer">
-          Don't have an account? <Link href="/register" style={{ color: "var(--green-600)", fontWeight: "600", textDecoration: "underline" }}>Create one here</Link>.
+          Don&apos;t have an account? <Link href="/register" style={{ color: "var(--green-600)", fontWeight: "600", textDecoration: "underline" }}>Create one here</Link>.
         </p>
       </div>
     </div>

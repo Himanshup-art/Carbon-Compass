@@ -22,7 +22,7 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const updates: Record<string, any> = {};
+    const updates: Record<string, string> = {};
 
     if (newName?.trim()) {
       updates.name = newName.trim();
